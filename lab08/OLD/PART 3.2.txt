@@ -1,0 +1,9 @@
+# min : 98002
+min.lm <- lm(price ~ bathrooms + sqft_living + sqft_lot  + condition + yr_built + lat, data = min)
+
+
+max.lm <- lm(price ~ bathrooms + sqft_living + sqft_lot + condition + yr_built + lat, data = max)
+
+
+
+median.lm <- lm(price ~ bedrooms + sqft_living + sqft_lot + floors + condition + grade + sqft_above + zipcode + lat + sqft_living15, data = median)

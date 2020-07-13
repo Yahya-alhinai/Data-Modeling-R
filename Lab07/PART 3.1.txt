@@ -1,0 +1,37 @@
+
+
+
+
+house <- read.csv("train-data.csv")
+min <- read.csv("min.csv")
+max <- read.csv("max.csv")
+median <- read.csv("median.csv")
+
+house.lm <- lm (price ~ bedrooms + bathrooms + sqft_living + sqft_lot + floors + view + condition
+                + grade + sqft_above + sqft_basement + yr_built + + yr_renovated + zipcode + lat + long +
+                  sqft_living15 + sqft_lot15, data = house)
+
+ summary(house.lm)
+
+ df <- data.frame(table(house$zipcode))
+
+ mean <- NULL
+ zipCode <- NULL
+ for(i in 1:70){
+   mean[i] = mean(subset(house, zipcode == df$Var1[i])$price)
+   zipCode[i] <- df$Var1[i]
+ }
+
+ print(mean)
+ print(df$Var1)
+ print("**********************************************************************")
+ print(max(mean))
+ print(min(mean))
+ print(median(mean))
+ print("**********************************************************************")
+ xx <- data.frame(sort(mean))
+ # max : 98039
+ # min : 98002
+ # median : 98059 || 98011
+ 
+

@@ -1,0 +1,63 @@
+[INT92]
+
+rows <- nrow(int92.dat$clock + dieSize + featureSize+ channel+FO4delay+L1icache+sqrt(L1icache)+L1dcache+sqrt(L1dcache)+transistors, data=int92.dat)
+f <- 0.6
+upper_bound <- floor(f * rows)
+permuted_int00.dat <- int00.dat[sample(rows), ]
+train.dat <- permuted_int00.dat[1:upper_bound, ]
+test.dat <- permuted_int00.dat[(upper_bound+1):rows, ]
+int00_new.lm <- lm(nperf ~ clock + cores + voltage + channel + L1icache + sqrt(L1icache) + L1dcache + sqrt(L1dcache) + L2cache + sqrt(L2cache), data = train.dat)
+predicted.dat <- predict(int00_new.lm+, newdata=test.dat)
+delta <- predicted.dat - test.dat$nperf
+t.test(delta, conf.level = 0.95)
+
+
+ -5.7302017  0.7563546
+sample estimates:
+mean of x 
+-2.486924
+
+ -3.916998  3.463203
+sample estimates:
+ mean of x 
+-0.2268974 
+
+
+-------------------------------------------------------------------------------------------------------------------------
+[int0]
+
+rows <- nrow(int00.dat)
+f <- 0.6
+upper_bound <- floor(f * rows)
+permuted_int00.dat <- int00.dat[sample(rows), ]
+train.dat <- permuted_int00.dat[1:upper_bound, ]
+test.dat <- permuted_int00.dat[(upper_bound+1):rows, ]
+int00_new.lm <- lm(nperf ~ clock + cores + voltage + channel + L1icache + sqrt(L1icache) + L1dcache + sqrt(L1dcache) + L2cache + sqrt(L2cache), data = train.dat)
+predicted.dat <- predict(int00_new.lm, newdata=test.dat)
+delta <- predicted.dat - test.dat$nperf
+t.test(delta, conf.level = 0.95)
+
+ -0.7278163  3.5199963
+sample estimates:
+mean of x 
+  1.39609 
+
+ -1.757490  1.263858
+sample estimates:
+ mean of x 
+-0.2468157 
+
+
+
+
+[int00-int92]
+
+
+
+
+
+
+
+
+
+

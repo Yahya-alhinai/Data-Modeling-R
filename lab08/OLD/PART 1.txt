@@ -1,0 +1,32 @@
+house <- read.csv("train-data.csv")
+
+
+house.lm <- lm (price ~ bedrooms + bathrooms + sqft_living + sqft_lot + floors + view + condition
+                + grade + sqft_above + sqft_basement + yr_built + + yr_renovated + zipcode + lat + long +
+                  sqft_living15 + sqft_lot15, data = house)
+
+
+summary(house.lm)
+
+###################################################################
+###################################################################
+###################################################################
+
+
+new <- NULL
+
+for (i in 1:10000){
+  dataSelect.dat <- house
+  rows <- nrow(dataSelect.dat)
+  f <- 0.5
+  upper_bound <- floor(f * rows)
+  permuted_dataSelect.dat <- dataSelect.dat[sample(rows), ]
+  train.dat <- permuted_dataSelect.dat[1:upper_bound, ]
+  test.dat <- permuted_dataSelect.dat[(upper_bound+1):rows, ]
+  dataSelect_new.lm <- lm(price ~ bedrooms + bathrooms + sqft_living + sqft_lot + floors + view + condition + grade + sqft_above + sqft_basement + yr_built + yr_renovated + zipcode + lat + long + sqft_living15 + sqft_lot15, data = house)
+  predicted.dat <- predict(dataSelect_new.lm, newdata=test.dat)
+  delta <- predicted.dat - test.dat$price
+  new <- append(new, delta)
+}
+x = t.test(new, conf.level = 0.95)
+

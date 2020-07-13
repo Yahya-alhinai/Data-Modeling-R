@@ -1,0 +1,36 @@
+
+house <- read.csv("train-data.csv")
+min <- read.csv("min.csv")
+max <- read.csv("max.csv")
+median <- read.csv("median.csv")
+low <- read.csv("low.csv")
+mid <- read.csv("mid.csv")
+high <- read.csv("high.csv")
+test <- read.csv("test-data.csv")
+
+house.lm <- lm(price ~ bathrooms + sqft_living + view + condition
+               + grade + lat, data = low)
+
+x = summary(house.lm)
+
+print(x)
+
+TA <- NULL
+rows <- nrow(test)
+dataSelect_new.lm <- lm(price ~ bathrooms + sqft_living + view + condition + grade + lat, data = low)
+
+for (i in 1:rows){
+  predicted.dat <- data.frame(predict(dataSelect_new.lm, newdata=test[i,]))
+  TA <- rbind(TA, data.frame(test[i,]$id, predicted.dat$predict.dataSelect_new.lm..newdata...test.i....))
+}
+
+
+
+house.lm <- lm (price ~ bathrooms + sqft_living + view + condition
+                + grade + lat, data = low)
+lm(price ~ bedrooms + bathrooms + sqft_living + sqft_lot + 
+    floors + view + condition + grade + yr_built + zipcode + 
+    lat + sqft_living15, data = mid)
+
+house.lm <- lm(price ~ bedrooms + bathrooms + sqft_living + floors + view + grade + sqft_above + yr_built + zipcode + lat + long , data = high)
+
